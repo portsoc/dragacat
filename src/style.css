@@ -1,0 +1,52 @@
+body {
+  font-family: sans-serif;
+  perspective: 800px;
+}
+
+#clowder, #vet {
+  border: solid grey thin;
+  background: #DEF;
+  margin: 1ex 1em;
+  padding: 1ex 1em;
+  width: 40%;
+  min-height: 20em;
+  display: inline-block;
+  float: left;
+}
+
+div[draggable] {
+  transition: all 0.25s ease-in-out;
+}
+
+div[draggable]:hover {
+  transform: scale(1.01) rotateY(-5deg) rotateX(2.5deg) rotateZ(0.5deg);
+  box-shadow: 1ex 1ex 2em #999;
+}
+
+.cat {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+  margin: 1ex;
+  padding: 0;
+}
+
+.cat p {
+  position: absolute;
+  top: 0;
+  left: 1ex;
+  color: #FFF;
+  text-shadow: 0 0 1em black;
+}
+
+q {
+  opacity: 0.6
+}
+
+footer {
+    clear: both;
+    text-align: center;
+    padding-top: 2em;
+}

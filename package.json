@@ -1,0 +1,19 @@
+{
+  "name": "dragacat",
+  "version": "0.0.1",
+  "description": "DragACat: And HTML5 Drag and Drop demonstrator",
+  "author": "rjb@port.ac.uk",
+  "license": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-jslint": "^1.1.8",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-gh-pages": "^0.9.1"
+  },
+  "folders": {
+    "src": "src",
+    "build": "build"
+  }
+}
