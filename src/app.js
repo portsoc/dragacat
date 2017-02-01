@@ -4,14 +4,14 @@
         vet = document.getElementById("vet"),
         clowder = document.getElementById("clowder"),
         kittens  = [
-            { id: "kittenone", name: "Top", pic: "http://placekitten.com/g/125/120" },
-            { id: "kittentwo", name: "Claude", pic: "http://placekitten.com/g/120/121" },
-            { id: "kittenthree", name: "Ghengis", pic: "http://placekitten.com/g/120/122" },
-            { id: "kittenfour", name: "Fluffy", pic: "http://placekitten.com/g/120/133" },
-            { id: "kittenfive", name: "Colin", pic: "http://placekitten.com/g/120/124" },
-            { id: "pen", name: "Penny", pic: "http://placekitten.com/g/130/135" },
-            { id: "rodge", name: "Roger", pic: "http://placekitten.com/g/135/130" },
-            { id: "madge", name: "Madge", pic: "http://placekitten.com/g/145/125" }
+            { name: "Top", pic: "http://placekitten.com/g/125/120" },
+            { name: "Claude", pic: "http://placekitten.com/g/120/121" },
+            { name: "Ghengis", pic: "http://placekitten.com/g/120/122" },
+            { name: "Fluffy", pic: "http://placekitten.com/g/120/133" },
+            { name: "Colin", pic: "http://placekitten.com/g/120/124" },
+            { name: "Penny", pic: "http://placekitten.com/g/130/135" },
+            { name: "Roger", pic: "http://placekitten.com/g/135/130" },
+            { name: "Madge", pic: "http://placekitten.com/g/145/125" }
         ],
 
         treated = [],
@@ -42,12 +42,14 @@
             e.preventDefault();
         },
 
+        kittenCount = 0,
+
         addKitten = function (cat) {
             var kitty = document.createElement("div"),
                 pic = document.createElement("img"),
                 nom = document.createElement("p");
 
-            kitty.setAttribute("id", cat.id);
+            kitty.id = cat.id = 'cat' + (kittenCount += 1);
             kitty.draggable = true;
             kitty.className = "cat";
             kitty.addEventListener("dragstart", catDragStarted);
