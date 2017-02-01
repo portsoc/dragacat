@@ -15,16 +15,17 @@
         ],
 
         treated = [],
+        dragParent,
 
         catDragStarted = function (e) {
             var sendThisWithTheDrag = e.target.dataset.cat;
             e.dataTransfer.setData("application/json", sendThisWithTheDrag);
             e.dataTransfer.setDragImage(box, 100, 40);
             e.dataTransfer.effectAllowed = "move";
+            dragParent = e.target.parentElement;
         },
 
         catDropped = function (e) {
-            e.preventDefault();
             var cat,
                 received = e.dataTransfer.getData("application/json");
             if (received) {
@@ -35,11 +36,14 @@
                     treated.push(cat.name);
                     document.getElementById("log").textContent = "Treatment history: " + treated.join(", ");
                 }
+                e.preventDefault();
             }
         },
 
         dragHandler = function (e) {
-            e.preventDefault();
+            if (dragParent != e.currentTarget) {
+                e.preventDefault();
+            }
         },
 
         kittenCount = 0,
