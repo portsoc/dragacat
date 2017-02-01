@@ -20,7 +20,7 @@
             var sendThisWithTheDrag = e.target.dataset.cat;
             e.dataTransfer.setData("application/json", sendThisWithTheDrag);
             e.dataTransfer.setDragImage(box, 100, 40);
-            event.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.effectAllowed = "move";
         },
 
         catDropped = function (e) {
@@ -33,7 +33,7 @@
 
                 if (e.currentTarget === vet) {
                     treated.push(cat.name);
-                    document.getElementById("log").innerHTML = "Treatment history: " + treated.join(", ");
+                    document.getElementById("log").textContent = "Treatment history: " + treated.join(", ");
                 }
             }
         },
@@ -48,20 +48,20 @@
                 nom = document.createElement("p");
 
             kitty.setAttribute("id", cat.id);
-            kitty.setAttribute("draggable", true);
-            kitty.setAttribute("class", "cat");
+            kitty.draggable = true;
+            kitty.className = "cat";
             kitty.addEventListener("dragstart", catDragStarted);
             clowder.appendChild(kitty);
 
-            nom.innerText = cat.name;
+            nom.textContent = cat.name;
             kitty.appendChild(nom);
 
-            pic.setAttribute("src", cat.pic);
-            pic.setAttribute("alt", "a kitten, just because");
-            pic.setAttribute("draggable", false);
+            pic.src = cat.pic;
+            pic.alt = "a kitten, just because";
+            pic.draggable = false;
             kitty.appendChild(pic);
 
-            kitty.setAttribute("data-cat", JSON.stringify(cat));
+            kitty.dataset.cat = JSON.stringify(cat);
         };
 
     box = document.createElement('img');
