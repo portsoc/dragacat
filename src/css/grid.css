@@ -39,20 +39,3 @@ main {
 #intro {
     grid-area: intro;
 }
-
-
-.droptarget {
-  border: solid red thin;
-  height: 100%;
-}
-
-.griddle {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-#playground .griddle,
-#vet .griddle {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
