@@ -1,0 +1,46 @@
+body {
+  font-family: sans-serif;
+  perspective: 100vw;
+  margin: 0;
+}
+
+#intro, #clowder, #vet, #playground {
+  border: solid grey thin;
+  padding: 1ex 1em;
+  background: #def;
+  overflow: hidden;
+}
+
+.cat {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  margin: 1ex;
+  padding: 0;
+}
+
+.cat figcaption {
+  position: absolute;
+  top: 0;
+  left: 1ex;
+  color: #FFF;
+  text-shadow: 0 0 1em black;
+  max-width: 15vmin;
+}
+
+.cat img {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: grayscale(100%);
+}
+
+q {
+  opacity: 0.6
+}
+
+footer {
+    clear: both;
+    text-align: center;
+    padding-top: 2em;
+}

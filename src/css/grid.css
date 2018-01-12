@@ -1,0 +1,58 @@
+body, main {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-areas:
+      "  .  .        .      .           .  "
+      "  .  intro    intro  intro       .  "
+      "  .  .        .      .           .  "
+      "  .  clowder  .      vet         .  "
+      "  .  clowder  .      .           .  "
+      "  .  clowder  .      playground  .  "
+      "  .  .        .      .           .  ";
+
+  grid-template-columns: 1vmin 1fr 1vmin 1fr 1vmin;
+  grid-template-rows: 1vmin auto 1vmin 1fr 1vmin 1fr 1vmin;
+}
+
+#clowder, #vet, #playground {
+  position: relative;
+}
+
+#clowder{
+    grid-area: clowder;
+}
+
+#vet {
+    grid-area: vet;
+}
+
+#playground {
+    grid-area: playground;
+}
+
+#intro {
+    grid-area: intro;
+}
+
+
+.droptarget {
+  border: solid red thin;
+  height: 100%;
+}
+
+.griddle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#playground .griddle,
+#vet .griddle {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
