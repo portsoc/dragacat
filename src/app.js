@@ -1,77 +1,135 @@
-(function () {
-    "use strict";
-    var box,
-        vet = document.getElementById("vet"),
-        clowder = document.getElementById("clowder"),
-        kittens  = [
-            { id: "kittenone", name: "Top", pic: "http://placekitten.com/g/125/120" },
-            { id: "kittentwo", name: "Claude", pic: "http://placekitten.com/g/120/121" },
-            { id: "kittenthree", name: "Ghengis", pic: "http://placekitten.com/g/120/122" },
-            { id: "kittenfour", name: "Fluffy", pic: "http://placekitten.com/g/120/133" },
-            { id: "kittenfive", name: "Colin", pic: "http://placekitten.com/g/120/124" },
-            { id: "pen", name: "Penny", pic: "http://placekitten.com/g/130/135" },
-            { id: "rodge", name: "Roger", pic: "http://placekitten.com/g/135/130" },
-            { id: "madge", name: "Madge", pic: "http://placekitten.com/g/145/125" }
-        ],
+'use strict';
 
-        treated = [],
+const treatmentHistoryLength = 10;
+const vetMaximumStay = 5000;
 
-        catDragStarted = function (e) {
-            var sendThisWithTheDrag = e.target.dataset.cat;
-            e.dataTransfer.setData("application/json", sendThisWithTheDrag);
-            e.dataTransfer.setDragImage(box, 100, 40);
-            event.dataTransfer.effectAllowed = "move";
-        },
+const cats = [
+    { id: 'k1', name: 'Top', pic: 'i/1.png' },
+    { id: 'k2', name: 'Claude', pic: 'i/2.png' },
+    { id: 'k3', name: 'Ghengis', pic: 'i/3.png' },
+    { id: 'k4', name: 'Fluffy', pic: 'i/4.png' },
+    { id: 'k5', name: 'Colin', pic: 'i/5.png' },
+    { id: 'k6', name: 'Penny', pic: 'i/6.png' },
+    { id: 'k7', name: 'Roger', pic: 'i/7.png' },
+    { id: 'k8', name: 'Madge', pic: 'i/8.png' },
+];
 
-        catDropped = function (e) {
-            e.preventDefault();
-            var cat,
-                received = e.dataTransfer.getData("application/json");
-            if (received) {
-                cat = JSON.parse(received);
-                e.currentTarget.appendChild(document.getElementById(cat.id));
+let box = null;
 
-                if (e.currentTarget === vet) {
-                    treated.push(cat.name);
-                    document.getElementById("log").innerHTML = "Treatment history: " + treated.join(", ");
-                }
-            }
-        },
 
-        dragHandler = function (e) {
-            e.preventDefault();
-        },
+/**
+ * @param {Event} e is a drag event
+ */
+function catDragStarted(e) {
+    let sendThisWithTheDrag = e.target.dataset.cat;
+    e.dataTransfer.setData('application/json', sendThisWithTheDrag);
+    e.dataTransfer.setDragImage(box, 100, 40);
+    e.dataTransfer.effectAllowed = 'move';
+}
 
-        addKitten = function (cat) {
-            var kitty = document.createElement("div"),
-                pic = document.createElement("img"),
-                nom = document.createElement("p");
+/**
+ * @param  {object} cat is an object describing a dragged cat
+ */
+function updateTreatmentHistory(cat) {
+    let treated = [];
+    if (localStorage.treated) {
+        treated = JSON.parse(localStorage.treated);
+    }
+    if (cat) {
+        treated.push(cat.name);
+    }
+    localStorage.treated = JSON.stringify(treated);
+    window.log.innerHTML = `The last ${treatmentHistoryLength} cats to be treated were: ${ treated.slice(-treatmentHistoryLength).join(', ')}`;
+}
 
-            kitty.setAttribute("id", cat.id);
-            kitty.setAttribute("draggable", true);
-            kitty.setAttribute("class", "cat");
-            kitty.addEventListener("dragstart", catDragStarted);
-            clowder.appendChild(kitty);
+/**
+ * @param {Event} e is a drag event fired when a cat is droppped on a UI element
+ */
+function catDropped(e) {
+    e.preventDefault();
+    let received = e.dataTransfer.getData('application/json');
+    if (received) {
+        let cat = JSON.parse(received);
+        let elem = document.getElementById(cat.id);
+        elem.dataset.checkInTime = Date.now();
+        e.currentTarget.appendChild(elem);
 
-            nom.innerText = cat.name;
-            kitty.appendChild(nom);
+        if (e.currentTarget === window.vet) {
+            updateTreatmentHistory(cat);
+        }
+    }
+}
 
-            pic.setAttribute("src", cat.pic);
-            pic.setAttribute("alt", "a kitten, just because");
-            pic.setAttribute("draggable", false);
-            kitty.appendChild(pic);
+/**
+ * @param  {Event} e
+ */
+function dragHandler(e) {
+    e.preventDefault();
+}
 
-            kitty.setAttribute("data-cat", JSON.stringify(cat));
-        };
 
+/**
+ * Add a kitten to the DOM
+ * @param {object} cat contains details on the cat to be added
+ */
+function addCat(cat) {
+    const kitty = document.createElement('figure');
+    const pic = document.createElement('img');
+    const nom = document.createElement('figcaption');
+
+    kitty.appendChild(pic);
+    kitty.appendChild(nom);
+    kitty.setAttribute('id', cat.id);
+    kitty.setAttribute('draggable', true);
+    kitty.setAttribute('class', 'cat');
+    kitty.setAttribute('data-cat', JSON.stringify(cat));
+    kitty.addEventListener('dragstart', catDragStarted);
+
+    nom.innerText = cat.name;
+
+    pic.setAttribute('src', cat.pic);
+    pic.setAttribute('alt', 'a kitten, just because');
+    pic.setAttribute('draggable', false);
+
+    window.clowder.appendChild(kitty);
+}
+
+
+/**
+ * Runs every second and check out cats whose stay at
+ * the vet has been longer vetMaximumStay milliseconds.
+ */
+function checkOut() {
+  const catsAtTheVet = window.vet.querySelectorAll('.cat');
+  const now = Date.now();
+  for (let cat of catsAtTheVet) {
+    if (now - cat.dataset.checkInTime > vetMaximumStay) {
+      window.clowder.appendChild(cat);
+      cat.dataset.checkInTime = 0;
+    }
+  }
+}
+
+/**
+ * Start up the app.
+ */
+function boot() {
+    // inject kitten data into document as HTML
+    cats.forEach(addCat);
+
+    // prepare box image for use when dragging cats
     box = document.createElement('img');
-    box.src = 'carrier.png';
+    box.src = 'i/carrier.png';
     box.width = 10;
 
-    vet.addEventListener("drop", catDropped);
-    vet.addEventListener("dragover", dragHandler);
-    clowder.addEventListener("drop", catDropped);
-    clowder.addEventListener("dragover", dragHandler);
+    window.vet.addEventListener('drop', catDropped);
+    window.vet.addEventListener('dragover', dragHandler);
+    window.clowder.addEventListener('drop', catDropped);
+    window.clowder.addEventListener('dragover', dragHandler);
+    window.playground.addEventListener('drop', catDropped);
+    window.playground.addEventListener('dragover', dragHandler);
 
-    kittens.forEach(addKitten);
-}());
+    window.setInterval(checkOut, 1000);
+}
+
+window.addEventListener('load', boot);
