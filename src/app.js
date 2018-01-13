@@ -14,7 +14,7 @@ const cats = [
   { name: 'Top', pic: 'i/8.png' },
 ];
 
-let box = null;
+let catCarrierBox = null;
 let dragParent = null;
 
 /**
@@ -28,7 +28,7 @@ function catDragStarted(e) {
     return;
   }
   e.dataTransfer.setData('application/json', sendThisWithTheDrag);
-  e.dataTransfer.setDragImage(box, 100, 40);
+  e.dataTransfer.setDragImage(catCarrierBox, 100, 40);
   e.dataTransfer.effectAllowed = 'move';
   dragParent = e.target.parentElement;
 }
@@ -107,7 +107,7 @@ function addCat(cat, catIdx) {
 
 /**
  * Runs every second and check out cats whose stay at
- * the vet has been longer vetMaximumStay milliseconds.
+ * the vet has exceeded vetMaximumStay milliseconds.
  */
 function checkOut() {
   const catsAtTheVet = window.vet.querySelectorAll('.cat');
@@ -131,9 +131,8 @@ function boot() {
   updateTreatmentHistory();
 
   // prepare box image for use when dragging cats
-  box = document.createElement('img');
-  box.src = 'i/carrier.png';
-  box.width = 10;
+  catCarrierBox = document.createElement('img');
+  catCarrierBox.src = 'i/carrier.png';
 
   window.vet.addEventListener('drop', catDropped);
   window.vet.addEventListener('dragover', dragHandler);
