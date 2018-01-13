@@ -11,3 +11,11 @@ figure[draggable]:hover {
   transform: scale(1.01) rotateY(-5deg) rotateX(2.5deg) rotateZ(-0.5deg);
   box-shadow: 0 1ex 2em #999;
 }
+
+.currenttarget {
+  box-shadow: 0 0 1ex 0.5ex #def;
+}
+
+.dragging {
+  opacity: 0.5;
+}

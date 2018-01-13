@@ -6,7 +6,7 @@ body {
 #intro,
 #clowder,
 #vet,
-#playground {
+.pen {
   border: solid grey thin;
   padding: 1ex 1em;
   background: #def;
@@ -19,7 +19,7 @@ body {
   overflow: hidden;
   margin: 1ex;
   padding: 0;
-  max-width: 13vmin;
+  max-width: 4em;
 }
 
 .cat figcaption {
@@ -41,10 +41,6 @@ body {
 
 .cat:hover img {
   filter: none;
-}
-
-q {
-  opacity: 0.6;
 }
 
 footer {

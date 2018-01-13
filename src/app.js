@@ -14,17 +14,21 @@ const cats = [
   { name: 'Top', pic: 'i/8.png' },
 ];
 
+// give every cat an index that reflects its position in the array
+cats.forEach((c, idx) => c.index = idx);
+
+
 /**
- * Adds a kitten to the DOM.
+ * Makes a kitten element.
  * @param {object} cat contains details on the cat to be added
- * @param {number} catIdx unique number of the cat
+ * @return {Element}
  */
-function addCat(cat, catIdx) {
+function makeCat(cat) {
   const kitty = document.createElement('figure');
   const pic = document.createElement('img');
   const nom = document.createElement('figcaption');
 
-  cat.id = `cat${catIdx}`;
+  cat.id = `cat${cat.index}`;
   kitty.id = cat.id;
   kitty.className = 'cat';
   kitty.draggable = true;
@@ -35,11 +39,11 @@ function addCat(cat, catIdx) {
 
   pic.src = cat.pic;
   pic.alt = 'A cat';
-  pic.draggable = false;
+  pic.draggable = false; // images are by default draggable, but we want to drag the whole kitty figure
 
   kitty.appendChild(pic);
   kitty.appendChild(nom);
-  window.clowder.appendChild(kitty);
+  return kitty;
 }
 
 
@@ -61,7 +65,7 @@ function checkOut() {
 
 /**
  * Updates treatment history, shows it in the page.
- * @param  {object} cat is an object describing a dragged cat
+ * @param  {object} cat is an object describing a cat entering the vet (if any)
  */
 function updateTreatmentHistory(cat) {
   let treated = [];
@@ -69,11 +73,13 @@ function updateTreatmentHistory(cat) {
     treated = JSON.parse(localStorage.treated);
   }
   if (cat) {
+    // keep only treatmentHistoryLength entries in the history
+    treated.splice(0, treated.length - treatmentHistoryLength + 1);
     treated.push(cat.name);
   }
   localStorage.treated = JSON.stringify(treated);
   if (treated.length) {
-    window.log.textContent = `The last ${treatmentHistoryLength} cats to be treated were: ${ treated.slice(-treatmentHistoryLength).join(', ')}`;
+    window.log.textContent = `The last ${treatmentHistoryLength} cats to be treated were: ${ treated.join(', ')}`;
   }
 }
 
@@ -83,6 +89,7 @@ let catCarrierBox = null;
 let dragParent = null;
 
 /**
+ * Starts a drag.
  * @param {Event} e is a drag event
  */
 function catDragStarted(e) {
@@ -93,9 +100,10 @@ function catDragStarted(e) {
     return;
   }
   e.dataTransfer.setData('application/json', sendThisWithTheDrag);
-  e.dataTransfer.setDragImage(catCarrierBox, 100, 40);
+  e.dataTransfer.setDragImage(catCarrierBox, 100, 10);
   e.dataTransfer.effectAllowed = 'move';
   dragParent = e.target.parentElement;
+  e.target.classList.add('dragging');
 }
 
 /**
@@ -107,21 +115,45 @@ function catDropped(e) {
     e.preventDefault();
     const cat = JSON.parse(received);
     const elem = document.getElementById(cat.id);
-    elem.dataset.checkInTime = Date.now();
     e.currentTarget.appendChild(elem);
 
     if (e.currentTarget === window.vet) {
+      elem.dataset.checkInTime = Date.now();
       updateTreatmentHistory(cat);
     }
   }
 }
 
 /**
+ * Allows the drag if a cat is over a different container than where it started.
  * @param  {Event} e
  */
 function dragHandler(e) {
   if (dragParent != e.currentTarget) {
     e.preventDefault();
+    clearDragTargets();
+    e.currentTarget.classList.add('currenttarget');
+  }
+}
+
+
+/**
+ * Removes the highlight of the target container.
+ */
+function clearDragTargets() {
+  for (const el of document.querySelectorAll('.currenttarget')) {
+    el.classList.remove('currenttarget');
+  }
+}
+
+/**
+ * Ends the drag.
+ * @param  {Event} e
+ */
+function dragEnded(e) {
+  clearDragTargets();
+  for (const el of document.querySelectorAll('.dragging')) {
+    el.classList.remove('dragging');
   }
 }
 
@@ -131,7 +163,10 @@ function dragHandler(e) {
  */
 function boot() {
   // inject kitten data into document as HTML
-  cats.forEach(addCat);
+  cats.forEach((cat) => {
+      const catEl = makeCat(cat);
+      window.clowder.appendChild(catEl);
+  });
 
   // show which cats have been treated
   updateTreatmentHistory();
@@ -141,9 +176,13 @@ function boot() {
   catCarrierBox.src = 'i/carrier.png';
 
   window.vet.addEventListener('drop', catDropped);
-  window.vet.addEventListener('dragover', dragHandler);
   window.clowder.addEventListener('drop', catDropped);
+  window.vet.addEventListener('dragover', dragHandler);
   window.clowder.addEventListener('dragover', dragHandler);
+  window.vet.addEventListener('dragleave', clearDragTargets);
+  window.clowder.addEventListener('dragleave', clearDragTargets);
+  window.vet.addEventListener('dragend', dragEnded);
+  window.clowder.addEventListener('dragend', dragEnded);
 
   window.setInterval(checkOut, 1000);
 }
