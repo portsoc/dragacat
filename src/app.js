@@ -4,17 +4,16 @@ const treatmentHistoryLength = 10;
 const vetMaximumStay = 5000;
 
 const cats = [
-    { name: 'Top', pic: 'i/1.png' },
-    { name: 'Claude', pic: 'i/2.png' },
-    { name: 'Ghengis', pic: 'i/3.png' },
-    { name: 'Fluffy', pic: 'i/4.png' },
-    { name: 'Colin', pic: 'i/5.png' },
+    { name: 'Claude', pic: 'i/1.png' },
+    { name: 'Colin', pic: 'i/2.png' },
+    { name: 'Fluffy', pic: 'i/3.png' },
+    { name: 'Ghengis', pic: 'i/4.png' },
+    { name: 'Madge', pic: 'i/5.png' },
     { name: 'Penny', pic: 'i/6.png' },
     { name: 'Roger', pic: 'i/7.png' },
-    { name: 'Madge', pic: 'i/8.png' },
+    { name: 'Top', pic: 'i/8.png' },
 ];
 
-let catCount = 0;
 let box = null;
 let dragParent = null;
 
@@ -75,13 +74,14 @@ function dragHandler(e) {
 /**
  * Add a kitten to the DOM
  * @param {object} cat contains details on the cat to be added
+ * @param {number} catIdx unique number of the cat
  */
-function addCat(cat) {
+function addCat(cat, catIdx) {
     const kitty = document.createElement('figure');
     const pic = document.createElement('img');
     const nom = document.createElement('figcaption');
 
-    cat.id = `cat${++catCount}`;
+    cat.id = `cat${catIdx}`;
     kitty.id = cat.id;
     kitty.className = 'cat';
     kitty.draggable = true;
@@ -121,6 +121,9 @@ function checkOut() {
 function boot() {
     // inject kitten data into document as HTML
     cats.forEach(addCat);
+
+    // show which cats have been treated
+    updateTreatmentHistory();
 
     // prepare box image for use when dragging cats
     box = document.createElement('img');

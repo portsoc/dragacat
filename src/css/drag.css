@@ -1,5 +1,6 @@
 figure[draggable] {
   transition: all 0.25s ease-in-out;
+  cursor: move;
 }
 
 figure[draggable]:hover {

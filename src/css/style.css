@@ -37,6 +37,7 @@ body {
   height: 100%;
   overflow: hidden;
   filter: grayscale(100%);
+  display: block;
 }
 
 q {
