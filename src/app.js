@@ -21,7 +21,7 @@ let dragParent = null;
  * @param {Event} e is a drag event
  */
 function catDragStarted(e) {
-  let sendThisWithTheDrag = e.target.dataset.cat;
+  const sendThisWithTheDrag = e.target.dataset.cat;
   if (!sendThisWithTheDrag) {
     // stop the drag if we're not dragging just the cat
     e.preventDefault();
@@ -52,11 +52,11 @@ function updateTreatmentHistory(cat) {
  * @param {Event} e is a drag event fired when a cat is droppped on a UI element
  */
 function catDropped(e) {
-  let received = e.dataTransfer.getData('application/json');
+  const received = e.dataTransfer.getData('application/json');
   if (received) {
     e.preventDefault();
-    let cat = JSON.parse(received);
-    let elem = document.getElementById(cat.id);
+    const cat = JSON.parse(received);
+    const elem = document.getElementById(cat.id);
     elem.dataset.checkInTime = Date.now();
     e.currentTarget.appendChild(elem);
 
@@ -112,7 +112,7 @@ function addCat(cat, catIdx) {
 function checkOut() {
   const catsAtTheVet = window.vet.querySelectorAll('.cat');
   const now = Date.now();
-  for (let cat of catsAtTheVet) {
+  for (const cat of catsAtTheVet) {
     if (now - cat.dataset.checkInTime > vetMaximumStay) {
       window.clowder.appendChild(cat);
       cat.dataset.checkInTime = 0;
