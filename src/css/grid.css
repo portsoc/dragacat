@@ -1,4 +1,5 @@
-body, main {
+body,
+main {
   margin: 0;
   padding: 0;
 }
@@ -8,13 +9,13 @@ main {
   width: 100vw;
   display: grid;
   grid-template-areas:
-      "  .  .        .      .           .  "
-      "  .  intro    intro  intro       .  "
-      "  .  .        .      .           .  "
-      "  .  clowder  .      vet         .  "
-      "  .  clowder  .      .           .  "
-      "  .  clowder  .      playground  .  "
-      "  .  .        .      .           .  ";
+    "  .  .        .      .           .  "
+    "  .  intro    intro  intro       .  "
+    "  .  .        .      .           .  "
+    "  .  clowder  .      vet         .  "
+    "  .  clowder  .      .           .  "
+    "  .  clowder  .      playground  .  "
+    "  .  .        .      .           .  ";
 
   grid-template-columns: 1vmin 1fr 1vmin 1fr 1vmin;
   grid-template-rows: 1vmin auto 1vmin 1fr 1vmin 1fr 1vmin;

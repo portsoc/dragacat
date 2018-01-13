@@ -16,9 +16,22 @@
     "eslint-config-google": "^0.9.1"
   },
   "eslintConfig": {
-    "extends": ["eslint:recommended", "google"],
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
     "env": {
-           "browser": true
+      "browser": true,
+      "es6": true
+    },
+    "rules": {
+      "object-curly-spacing": 0,
+      "max-len": 0
+    }
+  },
+  "stylelint": {
+    "rules": {
+      "declaration-empty-line-before": ["never", {"ignore": "after-declaration"}]
     }
   }
 }

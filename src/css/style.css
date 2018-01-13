@@ -4,7 +4,10 @@ body {
   margin: 0;
 }
 
-#intro, #clowder, #vet, #playground {
+#intro,
+#clowder,
+#vet,
+#playground {
   border: solid grey thin;
   padding: 1ex 1em;
   background: #def;
@@ -24,7 +27,7 @@ body {
   position: absolute;
   top: 0;
   left: 1ex;
-  color: #FFF;
+  color: #fff;
   text-shadow: 0 0 1em black;
   max-width: 15vmin;
 }
@@ -37,11 +40,11 @@ body {
 }
 
 q {
-  opacity: 0.6
+  opacity: 0.6;
 }
 
 footer {
-    clear: both;
-    text-align: center;
-    padding-top: 2em;
+  clear: both;
+  text-align: center;
+  padding-top: 2em;
 }

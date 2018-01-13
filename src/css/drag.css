@@ -4,7 +4,7 @@ figure[draggable] {
 
 figure[draggable]:hover {
   transform: scale(1.01) rotateY(-5deg) rotateX(2.5deg) rotateZ(-0.5deg);
-  box-shadow: 0ex 1ex 2em #999;
+  box-shadow: 0 1ex 2em #999;
 }
 
 figure[draggable]:hover img {
