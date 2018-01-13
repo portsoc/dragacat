@@ -17,6 +17,7 @@ body {
   overflow: hidden;
   margin: 1ex;
   padding: 0;
+  max-width: 13vmin;
 }
 
 .cat figcaption {
