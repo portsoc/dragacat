@@ -134,8 +134,6 @@ function boot() {
     window.vet.addEventListener('dragover', dragHandler);
     window.clowder.addEventListener('drop', catDropped);
     window.clowder.addEventListener('dragover', dragHandler);
-    window.playground.addEventListener('drop', catDropped);
-    window.playground.addEventListener('dragover', dragHandler);
 
     window.setInterval(checkOut, 1000);
 }

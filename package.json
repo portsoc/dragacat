@@ -28,10 +28,5 @@
       "object-curly-spacing": 0,
       "max-len": 0
     }
-  },
-  "stylelint": {
-    "rules": {
-      "declaration-empty-line-before": ["never", {"ignore": "after-declaration"}]
-    }
   }
 }
