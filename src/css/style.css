@@ -1,6 +1,5 @@
 body {
   font-family: sans-serif;
-  perspective: 100vw;
   margin: 0;
 }
 
@@ -38,6 +37,10 @@ body {
   overflow: hidden;
   filter: grayscale(100%);
   display: block;
+}
+
+.cat:hover img {
+  filter: none;
 }
 
 q {
