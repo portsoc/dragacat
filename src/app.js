@@ -14,70 +14,8 @@ const cats = [
   { name: 'Top', pic: 'i/8.png' },
 ];
 
-let catCarrierBox = null;
-let dragParent = null;
-
 /**
- * @param {Event} e is a drag event
- */
-function catDragStarted(e) {
-  const sendThisWithTheDrag = e.target.dataset.cat;
-  if (!sendThisWithTheDrag) {
-    // stop the drag if we're not dragging just the cat
-    e.preventDefault();
-    return;
-  }
-  e.dataTransfer.setData('application/json', sendThisWithTheDrag);
-  e.dataTransfer.setDragImage(catCarrierBox, 100, 40);
-  e.dataTransfer.effectAllowed = 'move';
-  dragParent = e.target.parentElement;
-}
-
-/**
- * @param  {object} cat is an object describing a dragged cat
- */
-function updateTreatmentHistory(cat) {
-  let treated = [];
-  if (localStorage.treated) {
-    treated = JSON.parse(localStorage.treated);
-  }
-  if (cat) {
-    treated.push(cat.name);
-  }
-  localStorage.treated = JSON.stringify(treated);
-  window.log.textContent = `The last ${treatmentHistoryLength} cats to be treated were: ${ treated.slice(-treatmentHistoryLength).join(', ')}`;
-}
-
-/**
- * @param {Event} e is a drag event fired when a cat is droppped on a UI element
- */
-function catDropped(e) {
-  const received = e.dataTransfer.getData('application/json');
-  if (received) {
-    e.preventDefault();
-    const cat = JSON.parse(received);
-    const elem = document.getElementById(cat.id);
-    elem.dataset.checkInTime = Date.now();
-    e.currentTarget.appendChild(elem);
-
-    if (e.currentTarget === window.vet) {
-      updateTreatmentHistory(cat);
-    }
-  }
-}
-
-/**
- * @param  {Event} e
- */
-function dragHandler(e) {
-  if (dragParent != e.currentTarget) {
-    e.preventDefault();
-  }
-}
-
-
-/**
- * Add a kitten to the DOM
+ * Adds a kitten to the DOM.
  * @param {object} cat contains details on the cat to be added
  * @param {number} catIdx unique number of the cat
  */
@@ -119,6 +57,74 @@ function checkOut() {
     }
   }
 }
+
+
+/**
+ * Updates treatment history, shows it in the page.
+ * @param  {object} cat is an object describing a dragged cat
+ */
+function updateTreatmentHistory(cat) {
+  let treated = [];
+  if (localStorage.treated) {
+    treated = JSON.parse(localStorage.treated);
+  }
+  if (cat) {
+    treated.push(cat.name);
+  }
+  localStorage.treated = JSON.stringify(treated);
+  if (treated.length) {
+    window.log.textContent = `The last ${treatmentHistoryLength} cats to be treated were: ${ treated.slice(-treatmentHistoryLength).join(', ')}`;
+  }
+}
+
+
+// variables for dragging
+let catCarrierBox = null;
+let dragParent = null;
+
+/**
+ * @param {Event} e is a drag event
+ */
+function catDragStarted(e) {
+  const sendThisWithTheDrag = e.target.dataset.cat;
+  if (!sendThisWithTheDrag) {
+    // stop the drag if we're not dragging just the cat
+    e.preventDefault();
+    return;
+  }
+  e.dataTransfer.setData('application/json', sendThisWithTheDrag);
+  e.dataTransfer.setDragImage(catCarrierBox, 100, 40);
+  e.dataTransfer.effectAllowed = 'move';
+  dragParent = e.target.parentElement;
+}
+
+/**
+ * @param {Event} e is a drag event fired when a cat is droppped on a UI element
+ */
+function catDropped(e) {
+  const received = e.dataTransfer.getData('application/json');
+  if (received) {
+    e.preventDefault();
+    const cat = JSON.parse(received);
+    const elem = document.getElementById(cat.id);
+    elem.dataset.checkInTime = Date.now();
+    e.currentTarget.appendChild(elem);
+
+    if (e.currentTarget === window.vet) {
+      updateTreatmentHistory(cat);
+    }
+  }
+}
+
+/**
+ * @param  {Event} e
+ */
+function dragHandler(e) {
+  if (dragParent != e.currentTarget) {
+    e.preventDefault();
+  }
+}
+
 
 /**
  * Start up the app.
