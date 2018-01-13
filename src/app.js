@@ -22,6 +22,11 @@ let dragParent = null;
  */
 function catDragStarted(e) {
   let sendThisWithTheDrag = e.target.dataset.cat;
+  if (!sendThisWithTheDrag) {
+    // stop the drag if we're not dragging just the cat
+    e.preventDefault();
+    return;
+  }
   e.dataTransfer.setData('application/json', sendThisWithTheDrag);
   e.dataTransfer.setDragImage(box, 100, 40);
   e.dataTransfer.effectAllowed = 'move';
