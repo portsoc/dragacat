@@ -26,7 +26,8 @@
     },
     "rules": {
       "object-curly-spacing": 0,
-      "max-len": 0
+      "max-len": 0,
+      "indent": ["error", 2]
     }
   }
 }
