@@ -1,6 +1,6 @@
 'use strict';
 
-/* exported makeCat, cats */
+/* exported makeCat, cats, isCatInPlayground, addCatToPlayground, removeCatFromPlayground */
 
 const cats = [
   { name: 'Claude', pic: 'i/1.png' },
@@ -46,3 +46,55 @@ function makeCat(cat, dragStartHandler) {
   return kitty;
 }
 
+
+/**
+ * @param {number} catIndex
+ * @return {boolean}
+ */
+function isCatInPlayground(catIndex) {
+  return listCatsInPlayground().includes(catIndex);
+}
+
+
+/**
+ * @param {number} catIndex cat number
+ * @param {number} pen which playground pen the cat is in (0..2)
+ */
+function addCatToPlayground(catIndex, pen) {
+  const catsInPlayground = listCatsInPlayground();
+  const oldPos = catsInPlayground.indexOf(catIndex);
+  if (oldPos !== -1) {
+    catsInPlayground[oldPos] = null;
+  }
+  catsInPlayground[pen] = catIndex;
+  saveCatsInPlayground(catsInPlayground);
+}
+
+
+/**
+ * @param {number} catIndex cat number
+ */
+function removeCatFromPlayground(catIndex) {
+  const catsInPlayground = listCatsInPlayground();
+  const pos = catsInPlayground.indexOf(catIndex);
+  if (pos !== -1) {
+    catsInPlayground[pos] = null;
+    saveCatsInPlayground(catsInPlayground);
+  }
+}
+
+
+/**
+ * @return {boolean}
+ */
+function listCatsInPlayground() {
+  return JSON.parse(localStorage.catsInPlayground || '[]');
+}
+
+
+/**
+ * @param {Array} cats
+ */
+function saveCatsInPlayground(cats) {
+  localStorage.catsInPlayground = JSON.stringify(cats);
+}

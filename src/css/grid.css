@@ -20,6 +20,39 @@ main.clowder-vet {
     / 1fr 1fr;
 }
 
+main.playground {
+  grid-template:
+    " intro intro intro " auto
+    " .     .     .     " 1fr
+    / 1fr 1fr 1fr;
+}
+
+@media screen and (max-width: 30em) {
+  main.playground {
+    grid-template:
+      " intro " auto
+      " .     " 1fr
+      " .     " 1fr
+      " .     " 1fr
+      / 1fr;
+  }
+
+  .pen > h1,
+  .pen > p {
+    display: inline;
+  }
+
+  .pen > h1 {
+    font-size: 120%;
+  }
+
+  .pen > p::before { content: '–'; }
+
+  .pen > .cat {
+    display: block;
+  }
+}
+
 #clowder,
 #vet {
   position: relative;
