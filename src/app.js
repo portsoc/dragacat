@@ -1,51 +1,9 @@
 'use strict';
 
+/* global makeCat, cats */
+
 const treatmentHistoryLength = 10;
 const vetMaximumStay = 5000;
-
-const cats = [
-  { name: 'Claude', pic: 'i/1.png' },
-  { name: 'Colin', pic: 'i/2.png' },
-  { name: 'Fluffy', pic: 'i/3.png' },
-  { name: 'Ghengis', pic: 'i/4.png' },
-  { name: 'Madge', pic: 'i/5.png' },
-  { name: 'Penny', pic: 'i/6.png' },
-  { name: 'Roger', pic: 'i/7.png' },
-  { name: 'Top', pic: 'i/8.png' },
-];
-
-// give every cat an index that reflects its position in the array
-cats.forEach((c, idx) => c.index = idx);
-
-
-/**
- * Makes a kitten element.
- * @param {object} cat contains details on the cat to be added
- * @return {Element}
- */
-function makeCat(cat) {
-  const kitty = document.createElement('figure');
-  const pic = document.createElement('img');
-  const nom = document.createElement('figcaption');
-
-  cat.id = `cat${cat.index}`;
-  kitty.id = cat.id;
-  kitty.className = 'cat';
-  kitty.draggable = true;
-  kitty.dataset.cat = JSON.stringify(cat);
-  kitty.addEventListener('dragstart', catDragStarted);
-
-  nom.textContent = cat.name;
-
-  pic.src = cat.pic;
-  pic.alt = 'A cat';
-  pic.draggable = false; // images are by default draggable, but we want to drag the whole kitty figure
-
-  kitty.appendChild(pic);
-  kitty.appendChild(nom);
-  return kitty;
-}
-
 
 /**
  * Runs every second and check out cats whose stay at
@@ -89,7 +47,7 @@ let catCarrierBox = null;
 let dragParent = null;
 
 /**
- * Starts a drag.
+ * Starts a drag, the target of the event is the cat.
  * @param {Event} e is a drag event
  */
 function catDragStarted(e) {
@@ -106,7 +64,19 @@ function catDragStarted(e) {
   e.target.classList.add('dragging');
 }
 
+
 /**
+ * Ends the drag, the target of the event is the cat.
+ * @param  {Event} e
+ */
+function catDragEnded(e) {
+  e.target.classList.remove('dragging');
+  dragParent = null;
+}
+
+
+/**
+ * Drops a cat on a container (clowder or vet), the currentTarget of the event is the container.
  * @param {Event} e is a drag event fired when a cat is droppped on a UI element
  */
 function catDropped(e) {
@@ -122,39 +92,31 @@ function catDropped(e) {
       updateTreatmentHistory(cat);
     }
   }
+
+  e.currentTarget.classList.remove('currenttarget');
 }
+
 
 /**
  * Allows the drag if a cat is over a different container than where it started.
+ * Also highlights the container visually.
  * @param  {Event} e
  */
 function dragHandler(e) {
   if (dragParent != e.currentTarget) {
     e.preventDefault();
-    clearDragTargets();
     e.currentTarget.classList.add('currenttarget');
+    e.dataTransfer.dropEffect = 'move';
   }
 }
 
 
 /**
  * Removes the highlight of the target container.
- */
-function clearDragTargets() {
-  for (const el of document.querySelectorAll('.currenttarget')) {
-    el.classList.remove('currenttarget');
-  }
-}
-
-/**
- * Ends the drag.
  * @param  {Event} e
  */
-function dragEnded(e) {
-  clearDragTargets();
-  for (const el of document.querySelectorAll('.dragging')) {
-    el.classList.remove('dragging');
-  }
+function dragLeave(e) {
+  e.currentTarget.classList.remove('currenttarget');
 }
 
 
@@ -164,8 +126,8 @@ function dragEnded(e) {
 function boot() {
   // inject kitten data into document as HTML
   cats.forEach((cat) => {
-      const catEl = makeCat(cat);
-      window.clowder.appendChild(catEl);
+    const catEl = makeCat(cat, catDragStarted);
+    window.clowder.appendChild(catEl);
   });
 
   // show which cats have been treated
@@ -179,10 +141,10 @@ function boot() {
   window.clowder.addEventListener('drop', catDropped);
   window.vet.addEventListener('dragover', dragHandler);
   window.clowder.addEventListener('dragover', dragHandler);
-  window.vet.addEventListener('dragleave', clearDragTargets);
-  window.clowder.addEventListener('dragleave', clearDragTargets);
-  window.vet.addEventListener('dragend', dragEnded);
-  window.clowder.addEventListener('dragend', dragEnded);
+  window.vet.addEventListener('dragleave', dragLeave);
+  window.clowder.addEventListener('dragleave', dragLeave);
+  window.vet.addEventListener('dragend', catDragEnded);
+  window.clowder.addEventListener('dragend', catDragEnded);
 
   window.setInterval(checkOut, 1000);
 }
