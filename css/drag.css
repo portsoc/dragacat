@@ -4,7 +4,11 @@ body {
 
 figure[draggable] {
   transition: all 0.25s ease-in-out;
-  cursor: move;
+  cursor: grab;
+}
+
+figure[draggable]:active {
+  cursor: grabbing;
 }
 
 figure[draggable]:hover {
