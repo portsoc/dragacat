@@ -69,3 +69,9 @@ main.playground {
 #intro {
   grid-area: intro;
 }
+
+@media screen and (max-height: 30em) {
+  #intro p {
+    display: none;
+  }
+}
