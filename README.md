@@ -3,6 +3,8 @@
 A small HTML5 drag and drop example, involving cats, a short trip to the vet, and a playground.
 
 Try it: http://portsoc.github.io/dragacat/
+Now with added [playground](http://portsoc.github.io/dragacat/playground.html)!
+
 
 ## How To Build
 1. Clone the repo.
