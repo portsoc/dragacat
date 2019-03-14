@@ -11,10 +11,6 @@
   "folders": {
     "src": "src"
   },
-  "devDependencies": {
-    "eslint": "^4.15.0",
-    "eslint-config-google": "^0.9.1"
-  },
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
@@ -27,8 +23,20 @@
     "rules": {
       "object-curly-spacing": 0,
       "max-len": 0,
-      "indent": ["error", 2],
+      "indent": [
+        "error",
+        2
+      ],
       "prefer-const": 2
     }
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-google": "^0.12.0"
+  },
+  "scripts": {
+    "start": "open index.html; open playground.html",
+    "test": "npm run lint",
+    "lint": "eslint *.js"
   }
 }
