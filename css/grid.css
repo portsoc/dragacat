@@ -74,4 +74,7 @@ main.playground {
   #intro p {
     display: none;
   }
+  #intro {
+    min-height: 0 !important;
+  }
 }
