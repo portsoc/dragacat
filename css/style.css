@@ -16,6 +16,10 @@ main.settings > * {
   overflow: hidden;
 }
 
+#vet {
+  position: relative;
+}
+
 .cat {
   display: inline-block;
   position: relative;
@@ -79,4 +83,13 @@ footer {
   min-height: 10rem;
   padding-right: 11rem;
   position: relative;
+}
+
+#settings {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 3rem;
+  font-size: 2rem;
+  text-decoration: none;
 }
