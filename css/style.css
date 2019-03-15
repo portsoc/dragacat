@@ -50,6 +50,23 @@ main.settings > * {
   filter: none;
 }
 
+/* in playground, put caption elsewhere */
+main.playground .cat {
+  overflow: visible;
+}
+
+main.playground .cat figcaption {
+  top: 100%;
+  left: 0;
+  color: black;
+  text-shadow: none;
+  padding-top: .5rem;
+  text-align: center;
+  width: 100%;
+  max-width: none;
+}
+
+
 footer {
   clear: both;
   text-align: center;
