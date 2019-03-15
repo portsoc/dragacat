@@ -63,6 +63,7 @@ footer {
 
   padding: 1rem;
   height: 8rem;
+  max-height: 80%;
   transform: rotate(20deg);
   transition: 0.15s ease-in-out;
 }
