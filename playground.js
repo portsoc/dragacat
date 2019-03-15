@@ -20,7 +20,7 @@ function catDragStarted(e) {
     return;
   }
   e.dataTransfer.setData('application/json', sendThisWithTheDrag);
-  e.dataTransfer.setDragImage(catCarrierBox, 100, 10);
+  if (localStorage.useCatCarrier) e.dataTransfer.setDragImage(catCarrierBox, 100, 10);
   e.dataTransfer.effectAllowed = 'move';
   dragParent = e.target.parentElement;
   e.target.classList.add('dragging');

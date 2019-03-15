@@ -1,0 +1,19 @@
+<!doctype html>
+<title>Drag-a-Cat settings</title>
+
+<h1>Drag-a-Cat settings</h1>
+
+<section>
+  <h2>Feline health and safety</h2>
+  <label>Use a cat carrier: <input type="checkbox" id="useCatCarrier"></label>
+</section>
+
+<script>
+  const useCatCarrierCheckbox = document.querySelector('#useCatCarrier');
+
+  useCatCarrierCheckbox.checked = !!localStorage.useCatCarrier;
+
+  useCatCarrierCheckbox.addEventListener('input', () => {
+    localStorage.useCatCarrier = useCatCarrierCheckbox.checked ? 'true' : '';
+  });
+</script>
