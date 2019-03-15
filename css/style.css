@@ -56,31 +56,22 @@ footer {
   padding-top: 2em;
 }
 
-#intro .new {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
+#new {
   position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+  right: 0;
+  top: 0%;
 
-  box-sizing: border-box;
-  width: 9rem;
-  height: 9rem;
-  padding: 1.5rem;
-
+  padding: 1rem;
+  height: 8rem;
   transform: rotate(20deg);
+  transition: 0.15s ease-in-out;
+}
 
-  color: black;
-  background-image: url(../i/star.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
+#new:hover {
+  transform: scale(1.05) rotate(10deg);
 }
 
 #intro {
-  min-height: 10rem;
   padding-right: 11rem;
   position: relative;
 }

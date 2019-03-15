@@ -74,7 +74,7 @@ function catDragStarted(e) {
  */
 function catDragEnded(e) {
   if (e.target.parentElement === dragParent && e.dataTransfer.dropEffect != 'none') {
-    // cat was dropped outside of our window, remove it here
+    // cat was dropped outside of our window (e.g. into the playground), remove it here
     e.target.remove();
   } else {
     e.target.classList.remove('dragging');
