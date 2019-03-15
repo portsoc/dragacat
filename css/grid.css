@@ -27,6 +27,13 @@ main.playground {
     / 1fr 1fr 1fr;
 }
 
+main.settings {
+  grid-template:
+    " intro " auto
+    " settings " 1fr
+    / 1fr;
+}
+
 @media screen and (max-width: 30em) {
   main.playground {
     grid-template:

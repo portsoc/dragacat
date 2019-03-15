@@ -8,7 +8,8 @@ body {
 #intro,
 #clowder,
 #vet,
-.pen {
+.pen,
+main.settings > * {
   border: solid grey thin;
   padding: 1ex 1em;
   background: #def;
