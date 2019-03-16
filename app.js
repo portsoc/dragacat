@@ -1,8 +1,5 @@
-import {cats, isCatInPlayground, makeCat, removeCatFromPlayground} from "./cats.js";
+import {cats, isCatInPlayground, makeCat, removeCatFromPlayground} from './cats.js';
 'use strict';
-
-/* global makeCat, cats, isCatInPlayground, removeCatFromPlayground */
-
 
 const treatmentHistoryLength = 10;
 const vetMaximumStay = 5000;
