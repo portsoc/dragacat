@@ -54,14 +54,19 @@ let dragParent = null;
  * @param {Event} e is a drag event
  */
 function catDragStarted(e) {
-  const sendThisWithTheDrag = e.target.dataset.cat;
-  if (!sendThisWithTheDrag) {
-    // stop the drag if we're not dragging just the cat
+  if (!e.target.dataset.cat) {
+    // stop the drag if the thing that's dragging  
+    // does not have cat data that we can use
     e.preventDefault();
     return;
   }
-  e.dataTransfer.setData('application/json', sendThisWithTheDrag);
+
+  // provide two kinds of data so we can drop in-app or into a text editor
+  e.dataTransfer.setData('application/json', e.target.dataset.cat);
+  e.dataTransfer.setData('text/plain', `Drag-a-Cat™: ${e.target.textContent}\n`);
+
   if (localStorage.useCatCarrier) e.dataTransfer.setDragImage(catCarrierBox, 100, 10);
+
   e.dataTransfer.effectAllowed = 'move';
   dragParent = e.target.parentElement;
   e.target.classList.add('dragging');
