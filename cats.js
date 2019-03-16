@@ -98,3 +98,12 @@ function listCatsInPlayground() {
 function saveCatsInPlayground(cats) {
   localStorage.catsInPlayground = JSON.stringify(cats);
 }
+
+export { 
+  cats, 
+  makeCat, 
+  isCatInPlayground,
+  listCatsInPlayground,
+  addCatToPlayground,
+  removeCatFromPlayground
+}
