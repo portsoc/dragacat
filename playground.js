@@ -1,4 +1,4 @@
-import {makeCat, cats, listCatsInPlayground, addCatToPlayground} from "./cats.js";
+import {makeCat, cats, listCatsInPlayground, addCatToPlayground} from './cats.js';
 
 
 // variables for dragging
