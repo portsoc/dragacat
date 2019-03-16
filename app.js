@@ -80,10 +80,15 @@ function catDragStarted(e) {
 function catDragEnded(e) {
   if (e.target.parentElement === dragParent && e.dataTransfer.dropEffect != 'none') {
     // cat was dropped outside of our window (e.g. into the playground), remove it here
-    e.target.remove();
-  } else {
-    e.target.classList.remove('dragging');
+    const cat = JSON.parse(e.target.dataset.cat);
+
+    // if the cat has not arrived in a playground (e.g. if it
+    // has been dropped into a text editor) then don't remove it
+    if (isCatInPlayground(cat.index)) {
+      e.target.remove();
+    }
   }
+  e.target.classList.remove('dragging');
   dragParent = null;
 }
 
