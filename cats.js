@@ -6,7 +6,7 @@ const cats = [
   { name: 'Claude', pic: 'i/1.png' },
   { name: 'Colin', pic: 'i/2.png' },
   { name: 'Fluffy', pic: 'i/3.png' },
-  { name: 'Ghengis', pic: 'i/4.png' },
+  { name: 'Genghis', pic: 'i/4.png' },
   { name: 'Madge', pic: 'i/5.png' },
   { name: 'Penny', pic: 'i/6.png' },
   { name: 'Roger', pic: 'i/7.png' },
