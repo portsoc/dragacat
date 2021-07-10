@@ -1,7 +1,5 @@
+import {cats, isCatInPlayground, makeCat, removeCatFromPlayground} from './cats.js';
 'use strict';
-
-/* global makeCat, cats, isCatInPlayground, removeCatFromPlayground */
-
 
 const treatmentHistoryLength = 10;
 const vetMaximumStay = 5000;
@@ -55,7 +53,7 @@ let dragParent = null;
  */
 function catDragStarted(e) {
   if (!e.target.dataset.cat) {
-    // stop the drag if the thing that's dragging  
+    // stop the drag if the thing that's dragging
     // does not have cat data that we can use
     e.preventDefault();
     return;

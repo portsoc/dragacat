@@ -1,6 +1,4 @@
-'use strict';
-
-/* global makeCat, cats, listCatsInPlayground, addCatToPlayground */
+import {makeCat, cats, listCatsInPlayground, addCatToPlayground} from './cats.js';
 
 
 // variables for dragging
